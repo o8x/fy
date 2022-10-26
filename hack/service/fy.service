@@ -1,0 +1,17 @@
+[Unit]
+Description=fy
+
+[Service]
+Type=simple
+User=root
+Group=root
+ExecStart=/sbin/fy -s
+ExecStop=/bin/kill -9 $MAINPID
+WorkingDirectory=/sbin
+Restart=on-failure
+KillMode=process
+TimeoutStopSec=5s
+LimitNOFILE=1000000
+
+[Install]
+WantedBy=multi-user.target
