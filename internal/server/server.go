@@ -29,6 +29,12 @@ func HomeFunc(w http.ResponseWriter, r *http.Request) {
 	lang := utils.ParseKeyFromQueryString(r, "lang", "zh-CN")
 	format := utils.ParseKeyFromQueryString(r, "format", "text")
 
+	for _, it := range []string{"text", "json", "xml", "multiline", "ml"} {
+		if utils.KeyInQueryString(r, it) {
+			format = it
+		}
+	}
+
 	ori := fy.LookupIP(net.ParseIP(ip), lang)
 	if ori == nil {
 		utils.WriteResponse(w, fmt.Sprintf("invalid origin: %s", ip))
